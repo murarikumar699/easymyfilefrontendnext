@@ -2,11 +2,10 @@
 import React, {useCallback, useEffect, useRef} from 'react'
 import {useDropzone} from 'react-dropzone'
 import { useState } from 'react';
-import constant from '../constant'
+import constant from '../../constant'
 var signatures = ["image/png","image/jpg","image/jpeg","image/svg"]   
 
-export default function FileUpload({setLayout}){
-    console.log("------0",setLayout)
+export default function FileUpload(){
     const divRef = useRef(null);
     const [preview, setPreview] = useState([]);
         useEffect(() => {
@@ -130,32 +129,11 @@ export default function FileUpload({setLayout}){
             }
         }
 
-        const dragOver = (ev) => {
-            // console.log(ev);
-            // console.log("ev====>>>>>",document.getElementById(ev));
-            // if (divRef.current) {
-            //     const rect = divRef.current.getBoundingClientRect();
-            //     const newX = rect.clientX - rect.target.width / 2;
-            //     const newY = rect.clientY - rect.target.height / 2;
-            //     setPosition({ x: rect.x, y: rect.y });
-            //     console.log(`X: ${rect.x}, Y: ${rect.y}, Width: ${rect.width}, Height: ${rect.height}`);
-            //     console.log(`X: ${rect.x}, Y: ${rect.y}, Width: ${rect.width}, Height: ${rect.height}`);
-            //   }
-            // const rect = document.getElementById('dragelement'+ev).getBoundingClientRect();
-            // console.log(`X: ${rect.x}, Y: ${rect.y}`);
-            // let e = document.getElementById('dragelement'+ev); 
+        const dragOver = (ev) => {         
             document.getElementById(ev).classList.add("dragOverClass");
         }
 
-        const dragLeave = (ev) => {
-            // if (divRef.current) {
-            //     const rect = divRef.current.getBoundingClientRect();
-            //     const newX = rect.clientX - rect.target.width / 2;
-            //     const newY = rect.clientY - rect.target.height / 2;
-            //     setPosition({ x: rect.x, y: rect.y });
-            //   }
-            // console.log(ev);
-            // console.log("ev====>>>>>",document.getElementById(ev));
+        const dragLeave = (ev) => {           
             document.getElementById(ev).classList.remove("dragOverClass");
         }
           
@@ -176,54 +154,55 @@ export default function FileUpload({setLayout}){
           }
         return (
             <>
-                <div className={setLayout === "d-none"  ? "" :"d-none" }>
-                    <div className='dropzone' {...getRootProps()} >
-                        <input {...getInputProps()}  />                
-                            {
-                                isDragActive &&
-                                <div className='dropzoneClass'></div>
-                            }                        
-                            <>
-                            {
-                                //  preview.length === 0 &&
-                                <div className='selectFile'>                                
-                                    <p className='fileSelectext'>{  preview.length === 0 ? "Select Image" : "Add More Image"}</p>
-                                    <p className='text-center mb-5 webView'>Or Drop Your File Here</p>
-                                </div>
-                            }
-                                
-                            </>
-                        
-                    </div> 
-                    <>
-                    {
-                        preview.length > 0 &&  <div className='imagePreview' onDrop={handleDrop}>
-                            {
-                                preview.map((image,i) => {
-                                    return(
-                                        <>
-                                        <div className='showImage'  ref={divRef} key={i} id={'dragelement'+i}  
-                                        
-                                        draggable="true" onDrop={() => drop(i)} onDragStart={()=> drag(i)} onDragOver={() => dragOver('dragelement'+i)} onDragLeave={() => dragLeave('dragelement'+i)}
-                                        
-                                        onTouchStart={(event) => handleTouchStart(event, i)}
-                                        onTouchMove={(event) => handleTouchMove(event, i)}
-                                            onTouchEnd={(event) => handleTouchEnd(event, i)}
-                                        >
-                                            <img src={image} imageId={i} key={i} className='showImageMiddle draggable' draggable="false"  alt=''/>
-                                            <img src={constant.deleteImage} className='deleteImage'   onClick={() => handleDelete(i)} alt='delete' />
-                                        </div>
-                                        </>
-                                    )
-                                })
-                            }                   
-                        </div>
-                    }
-                    {
-                        preview.length > 0 &&  <button className='exportButton'  onClick={() => exportToPDF()}>Export to PDF</button>
-                    }
-                
-                    </>
+            
+               <div>
+                <div className='dropzone' {...getRootProps()} >
+                    <input {...getInputProps()}  />                
+                        {
+                            isDragActive &&
+                            <div className='dropzoneClass'></div>
+                        }                        
+                        <>
+                        {
+                            //  preview.length === 0 &&
+                             <div className='selectFile'>                                
+                                <p className='fileSelectext'>{  preview.length === 0 ? "Select Image" : "Add More Image"}</p>
+                                <p className='text-center mb-5 webView'>Or Drop Your File Here</p>
+                            </div>
+                        }
+                            
+                        </>
+                    
+                </div> 
+                <>
+                {
+                     preview.length > 0 &&  <div className='imagePreview' onDrop={handleDrop}>
+                        {
+                            preview.map((image,i) => {
+                                return(
+                                    <>
+                                    <div className='showImage'  ref={divRef} key={i} id={'dragelement'+i}  
+                                    
+                                    draggable="true" onDrop={() => drop(i)} onDragStart={()=> drag(i)} onDragOver={() => dragOver('dragelement'+i)} onDragLeave={() => dragLeave('dragelement'+i)}
+                                    
+                                    onTouchStart={(event) => handleTouchStart(event, i)}
+                                    onTouchMove={(event) => handleTouchMove(event, i)}
+                                        onTouchEnd={(event) => handleTouchEnd(event, i)}
+                                    >
+                                        <img src={image} imageId={i} key={i} className='showImageMiddle draggable' draggable="false"  alt=''/>
+                                        <img src={constant.deleteImage} className='deleteImage'   onClick={() => handleDelete(i)} alt='delete' />
+                                    </div>
+                                    </>
+                                )
+                            })
+                        }                   
+                    </div>
+                }
+                {
+                     preview.length > 0 &&  <button className='exportButton'  onClick={() => exportToPDF()}>Export to PDF</button>
+                }
+               
+                </>
                 </div>
             </>
             
