@@ -9,9 +9,35 @@ export default function FileUpload({setLayout}){
     console.log("------0",setLayout)
     const divRef = useRef(null);
     const [preview, setPreview] = useState([]);
+    const [ipAddress, setIPAddress] = useState('')
+
         useEffect(() => {
-            document.title = 'Convert IMAGE to PDF. Convert JPEG file to PDF';
+            getUrl();
+            // document.title = 'Convert IMAGE to PDF. Convert JPEG file to PDF';              
         }, []);
+
+        const getUrl = async() => {
+            let ip = await fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => data.ip)
+            .catch(error => console.log(error))
+
+            await fetch(constant.url+"/getUserInfo", {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ip:ip
+                })
+            }).then(function (response) {
+            return response.blob();
+            }).catch(error => {
+                console.warn(error);
+            });
+        }
         const onDrop = useCallback((acceptedFiles) => {
           acceptedFiles.forEach((file,i) => {
             console.log("ff",file)
