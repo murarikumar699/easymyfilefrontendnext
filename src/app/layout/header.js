@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import Link from "next/link";
 import constant from "../../constant"
 
 
@@ -25,10 +24,10 @@ export default function Header({setLayout}){
                         <a href="/"><img src={constant.logo} className="logoImage" alt="easymyfile"></img></a>
                     </div>
                     <div className="headerMEnu">
-                            <Link href="/image-to-pdf" className={selectedMenu ===  "/" || selectedMenu === "/image-to-pdf" ? "activeMenu" : ""}>IMAGE TO PDF</Link>
-                            <Link href="/pdf-to-jpg" className={selectedMenu === "/pdf-to-jpg" ? "activeMenu" : ""} >PDF TO JPEG</Link>
-                            <Link href="/merge-pdf" className={selectedMenu === "/merge-pdf" ? "activeMenu" : ""}>MERGE PDF</Link>
-                            <Link href="/compress-image" className={selectedMenu === "/compress-image" ? "activeMenu" : ""}>COMPRESS IMAGE</Link>
+                            <a href={"/image-to-pdf"} className={selectedMenu ===  "/" || selectedMenu === "/image-to-pdf" ? "activeMenu" : ""}>IMAGE TO PDF</a>
+                            <a href={"/pdf-to-jpg"} className={selectedMenu === "/pdf-to-jpg" ? "activeMenu" : ""} >PDF TO JPEG</a>
+                            <a href={"/merge-pdf"} className={selectedMenu === "/merge-pdf" ? "activeMenu" : ""}>MERGE PDF</a>
+                            <a href={"/compress-image"} className={selectedMenu === "/compress-image" ? "activeMenu" : ""}>COMPRESS IMAGE</a>
                     </div>
                     <div className="headermobileMenu">
                        <img src={constant.menuImage} className="menuImage"  onClick={() => toogleMenu() }  alt="menu"></img>
